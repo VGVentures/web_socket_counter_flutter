@@ -53,7 +53,7 @@ class WebSocketClient {
     }
   }
 
-  /// Stream of messages.
+  /// The broadcast stream that emits values from the other endpoint.
   Stream<dynamic> get stream {
     if (!_connected) _connect();
     return _controller.stream;

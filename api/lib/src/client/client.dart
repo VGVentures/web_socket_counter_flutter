@@ -1,24 +1,8 @@
 import 'package:web_socket_client/web_socket_client.dart';
-
-/// {@template message}
-/// WebSocket Counter Messages
-/// {@endtemplate}
-enum Message {
-  /// An increment message.
-  increment('__increment__'),
-
-  /// A decrement message.
-  decrement('__decrement__');
-
-  /// {@macro message}
-  const Message(this.value);
-
-  /// The value of the message.
-  final String value;
-}
+import 'package:web_socket_counter_api/api.dart';
 
 /// {@template web_socket_counter_client}
-/// A Dart Client for WebSocket Counter
+/// A Dart Client for the WebSocket Counter API.
 /// {@endtemplate}
 class WebSocketCounterClient {
   /// {@macro web_socket_counter_client}
@@ -26,16 +10,16 @@ class WebSocketCounterClient {
 
   /// {@macro api_client}
   WebSocketCounterClient.localhost()
-      : this(uri: Uri.parse('ws://localhost:8080/ws'));
+      : this(uri: Uri.parse('ws://10.0.2.2:8080/ws'));
 
   final WebSocketClient _ws;
 
-  /// Increment count.
+  /// Send an increment message to the server.
   void increment() => _ws.add(Message.increment.value);
 
-  /// Decrement count.
+  /// Send an decrement message to the server.
   void decrement() => _ws.add(Message.decrement.value);
 
-  /// Return a real-time count.
+  /// Return a stream of real-time count updates from the server.
   Stream<int> get count => _ws.stream.cast<String>().map(int.parse);
 }
