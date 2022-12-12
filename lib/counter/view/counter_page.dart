@@ -25,7 +25,15 @@ class CounterView extends StatelessWidget {
     final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.counterAppBarTitle)),
-      body: const Center(child: CounterText()),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            CounterText(),
+            ConnectionText(),
+          ],
+        ),
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -55,7 +63,34 @@ class CounterText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final count = context.select((CounterBloc bloc) => bloc.state);
+    final count = context.select((CounterBloc bloc) => bloc.state.count);
     return Text('$count', style: theme.textTheme.headline1);
+  }
+}
+
+class ConnectionText extends StatelessWidget {
+  const ConnectionText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final connection = context.select((CounterBloc bloc) => bloc.state.status);
+    switch (connection) {
+      case CounterStatus.connected:
+        return Text(
+          'Connected',
+          style: theme.textTheme.caption?.copyWith(
+            color: theme.colorScheme.primary,
+          ),
+        );
+
+      case CounterStatus.disconnected:
+        return Text(
+          'Disconnected',
+          style: theme.textTheme.caption?.copyWith(
+            color: theme.colorScheme.error,
+          ),
+        );
+    }
   }
 }

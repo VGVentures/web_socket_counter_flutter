@@ -10,7 +10,7 @@ class WebSocketCounterClient {
 
   /// {@macro api_client}
   WebSocketCounterClient.localhost()
-      : this(uri: Uri.parse('ws://10.0.2.2:8080/ws'));
+      : this(uri: Uri.parse('ws://localhost:8080/ws'));
 
   final WebSocketClient _ws;
 
@@ -22,4 +22,10 @@ class WebSocketCounterClient {
 
   /// Return a stream of real-time count updates from the server.
   Stream<int> get count => _ws.stream.cast<String>().map(int.parse);
+
+  /// Return a stream of connection updates from the server.
+  Stream<WebSocketConnectionState> get connection => _ws.connection;
+
+  /// Close the connection.
+  void close() => _ws.close();
 }
