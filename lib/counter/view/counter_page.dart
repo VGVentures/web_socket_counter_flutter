@@ -37,20 +37,10 @@ class CounterView extends StatelessWidget {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              context.read<CounterBloc>().add(CounterIncrementPressed());
-            },
-            child: const Icon(Icons.add),
-          ),
-          const SizedBox(height: 8),
-          FloatingActionButton(
-            onPressed: () {
-              context.read<CounterBloc>().add(CounterDecrementPressed());
-            },
-            child: const Icon(Icons.remove),
-          ),
+        children: const [
+          IncrementButton(),
+          SizedBox(height: 8),
+          DecrementButton(),
         ],
       ),
     );
@@ -92,5 +82,41 @@ class ConnectionText extends StatelessWidget {
           ),
         );
     }
+  }
+}
+
+class IncrementButton extends StatelessWidget {
+  const IncrementButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final isConnected = context.select(
+      (CounterBloc bloc) => bloc.state.status == CounterStatus.connected,
+    );
+    return FloatingActionButton(
+      backgroundColor: isConnected ? null : Colors.grey,
+      onPressed: isConnected
+          ? () => context.read<CounterBloc>().add(CounterIncrementPressed())
+          : null,
+      child: const Icon(Icons.add),
+    );
+  }
+}
+
+class DecrementButton extends StatelessWidget {
+  const DecrementButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final isConnected = context.select(
+      (CounterBloc bloc) => bloc.state.status == CounterStatus.connected,
+    );
+    return FloatingActionButton(
+      backgroundColor: isConnected ? null : Colors.grey,
+      onPressed: isConnected
+          ? () => context.read<CounterBloc>().add(CounterDecrementPressed())
+          : null,
+      child: const Icon(Icons.remove),
+    );
   }
 }

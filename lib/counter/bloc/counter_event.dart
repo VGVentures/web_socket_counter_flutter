@@ -20,11 +20,11 @@ class _CounterCountChanged extends CounterEvent {
   List<Object?> get props => [count];
 }
 
-class _CounterConnectionChanged extends CounterEvent {
-  _CounterConnectionChanged(this.connection);
+class _CounterConnectionStateChanged extends CounterEvent {
+  _CounterConnectionStateChanged(this.state);
 
-  final WebSocketConnectionState connection;
+  final ConnectionState state;
 
   @override
-  List<Object?> get props => [connection];
+  List<Object?> get props => [state];
 }

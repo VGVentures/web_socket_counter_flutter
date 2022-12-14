@@ -12,7 +12,7 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
       : _client = client,
         super(const CounterState()) {
     on<CounterStarted>(_onCounterStarted);
-    on<_CounterConnectionChanged>(_onCounterConnectionChanged);
+    on<_CounterConnectionStateChanged>(_onCounterConnectionStateChanged);
     on<_CounterCountChanged>(_onCounterCountChanged);
     on<CounterIncrementPressed>(_onCounterIncrementPressed);
     on<CounterDecrementPressed>(_onCounterDecrementPressed);
@@ -20,7 +20,7 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
 
   final WebSocketCounterClient _client;
   StreamSubscription<int>? _countSubscription;
-  StreamSubscription<WebSocketConnectionState>? _connectionSubscription;
+  StreamSubscription<ConnectionState>? _connectionSubscription;
 
   void _onCounterStarted(
     CounterStarted event,
@@ -29,8 +29,8 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
     _countSubscription = _client.count.listen(
       (count) => add(_CounterCountChanged(count)),
     );
-    _connectionSubscription = _client.connection.listen((connection) {
-      add(_CounterConnectionChanged(connection));
+    _connectionSubscription = _client.connection.listen((state) {
+      add(_CounterConnectionStateChanged(state));
     });
   }
 
@@ -48,11 +48,11 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
     _client.decrement();
   }
 
-  void _onCounterConnectionChanged(
-    _CounterConnectionChanged event,
+  void _onCounterConnectionStateChanged(
+    _CounterConnectionStateChanged event,
     Emitter<CounterState> emit,
   ) {
-    emit(state.copyWith(status: event.connection.toStatus()));
+    emit(state.copyWith(status: event.state.toStatus()));
   }
 
   void _onCounterCountChanged(
@@ -71,15 +71,10 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
   }
 }
 
-extension on WebSocketConnectionState {
+extension on ConnectionState {
   CounterStatus toStatus() {
-    switch (this) {
-      case WebSocketConnectionState.connecting:
-      case WebSocketConnectionState.closed:
-        return CounterStatus.disconnected;
-      case WebSocketConnectionState.open:
-      case WebSocketConnectionState.closing:
-        return CounterStatus.connected;
-    }
+    return this is Connected
+        ? CounterStatus.connected
+        : CounterStatus.disconnected;
   }
 }

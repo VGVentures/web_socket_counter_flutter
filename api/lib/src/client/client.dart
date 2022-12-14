@@ -6,25 +6,25 @@ import 'package:web_socket_counter_api/api.dart';
 /// {@endtemplate}
 class WebSocketCounterClient {
   /// {@macro web_socket_counter_client}
-  WebSocketCounterClient({required Uri uri}) : _ws = WebSocketClient(uri: uri);
+  WebSocketCounterClient(Uri uri) : _ws = WebSocket(uri);
 
   /// {@macro api_client}
   WebSocketCounterClient.localhost()
-      : this(uri: Uri.parse('ws://localhost:8080/ws'));
+      : this(Uri.parse('ws://localhost:8080/ws'));
 
-  final WebSocketClient _ws;
+  final WebSocket _ws;
 
   /// Send an increment message to the server.
-  void increment() => _ws.add(Message.increment.value);
+  void increment() => _ws.send(Message.increment.value);
 
   /// Send an decrement message to the server.
-  void decrement() => _ws.add(Message.decrement.value);
+  void decrement() => _ws.send(Message.decrement.value);
 
   /// Return a stream of real-time count updates from the server.
-  Stream<int> get count => _ws.stream.cast<String>().map(int.parse);
+  Stream<int> get count => _ws.messages.cast<String>().map(int.parse);
 
   /// Return a stream of connection updates from the server.
-  Stream<WebSocketConnectionState> get connection => _ws.connection;
+  Stream<ConnectionState> get connection => _ws.connection;
 
   /// Close the connection.
   void close() => _ws.close();
