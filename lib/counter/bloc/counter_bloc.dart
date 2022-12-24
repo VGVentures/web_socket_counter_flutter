@@ -73,7 +73,7 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
 
 extension on ConnectionState {
   CounterStatus toStatus() {
-    return this is Connected
+    return this is Connected || this is Reconnected
         ? CounterStatus.connected
         : CounterStatus.disconnected;
   }
