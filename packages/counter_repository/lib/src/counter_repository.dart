@@ -1,16 +1,13 @@
 import 'package:web_socket_client/web_socket_client.dart';
-import 'package:web_socket_counter_api/api.dart';
+import 'package:web_socket_counter/counter/counter.dart';
 
-/// {@template web_socket_counter_client}
-/// A Dart Client for the WebSocket Counter API.
+/// {@template counter_repository}
+/// A Dart package which manages the counter domain.
 /// {@endtemplate}
-class WebSocketCounterClient {
-  /// {@macro web_socket_counter_client}
-  WebSocketCounterClient(Uri uri) : _ws = WebSocket(uri);
-
-  /// {@macro api_client}
-  WebSocketCounterClient.localhost()
-      : this(Uri.parse('ws://localhost:8080/ws'));
+class CounterRepository {
+  /// {@macro counter_repository}
+  CounterRepository({WebSocket? socket})
+      : _ws = socket ?? WebSocket(Uri.parse('ws://localhost:8080/ws'));
 
   final WebSocket _ws;
 

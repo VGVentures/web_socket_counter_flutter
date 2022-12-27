@@ -9,6 +9,8 @@ environment:
 
 dependencies:
   bloc: ^8.1.0
+  counter_repository:
+    path: packages/counter_repository
   equatable: ^2.0.5
   flutter:
     sdk: flutter
@@ -16,8 +18,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
-  web_socket_counter_api:
-    path: api
 
 dev_dependencies:
   bloc_test: ^9.1.0

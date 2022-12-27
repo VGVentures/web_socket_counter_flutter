@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:counter_repository/counter_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:web_socket_counter_api/client.dart';
 
 part 'counter_event.dart';
 part 'counter_state.dart';
 
 class CounterBloc extends Bloc<CounterEvent, CounterState> {
-  CounterBloc(WebSocketCounterClient client)
-      : _client = client,
+  CounterBloc({required CounterRepository counterRepository})
+      : _counterRepository = counterRepository,
         super(const CounterState()) {
     on<CounterStarted>(_onCounterStarted);
     on<_CounterConnectionStateChanged>(_onCounterConnectionStateChanged);
@@ -18,7 +18,7 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
     on<CounterDecrementPressed>(_onCounterDecrementPressed);
   }
 
-  final WebSocketCounterClient _client;
+  final CounterRepository _counterRepository;
   StreamSubscription<int>? _countSubscription;
   StreamSubscription<ConnectionState>? _connectionSubscription;
 
@@ -26,10 +26,10 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
     CounterStarted event,
     Emitter<CounterState> emit,
   ) {
-    _countSubscription = _client.count.listen(
+    _countSubscription = _counterRepository.count.listen(
       (count) => add(_CounterCountChanged(count)),
     );
-    _connectionSubscription = _client.connection.listen((state) {
+    _connectionSubscription = _counterRepository.connection.listen((state) {
       add(_CounterConnectionStateChanged(state));
     });
   }
@@ -38,14 +38,14 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
     CounterIncrementPressed event,
     Emitter<CounterState> emit,
   ) {
-    _client.increment();
+    _counterRepository.increment();
   }
 
   void _onCounterDecrementPressed(
     CounterDecrementPressed event,
     Emitter<CounterState> emit,
   ) {
-    _client.decrement();
+    _counterRepository.decrement();
   }
 
   void _onCounterConnectionStateChanged(
@@ -66,7 +66,7 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
   Future<void> close() {
     _connectionSubscription?.cancel();
     _countSubscription?.cancel();
-    _client.close();
+    _counterRepository.close();
     return super.close();
   }
 }

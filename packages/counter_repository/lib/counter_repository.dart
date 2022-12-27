@@ -1,4 +1,5 @@
-library client;
+/// A Dart package which manages the counter domain.
+library counter_repository;
 
 export 'package:web_socket_client/web_socket_client.dart'
     show
@@ -10,4 +11,4 @@ export 'package:web_socket_client/web_socket_client.dart'
         Reconnecting,
         Reconnected;
 
-export 'src/client/client.dart';
+export 'src/counter_repository.dart';

@@ -1,6 +1,6 @@
+import 'package:counter_repository/counter_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:web_socket_counter_api/client.dart';
 import 'package:web_socket_counter_flutter/counter/counter.dart';
 import 'package:web_socket_counter_flutter/l10n/l10n.dart';
 
@@ -10,8 +10,9 @@ class CounterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CounterBloc(WebSocketCounterClient.localhost())
-        ..add(CounterStarted()),
+      create: (context) => CounterBloc(
+        counterRepository: context.read<CounterRepository>(),
+      )..add(CounterStarted()),
       child: const CounterView(),
     );
   }

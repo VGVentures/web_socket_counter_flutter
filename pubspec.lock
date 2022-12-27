@@ -50,13 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  broadcaster:
+  broadcast_bloc:
     dependency: transitive
     description:
-      path: "api/packages/broadcaster"
-      relative: true
-    source: path
-    version: "0.1.0+1"
+      name: broadcast_bloc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0-dev.1"
   characters:
     dependency: transitive
     description:
@@ -85,6 +85,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
+  counter_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/counter_repository"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   coverage:
     dependency: transitive
     description:
@@ -483,12 +490,14 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.0-dev.1"
-  web_socket_counter_api:
-    dependency: "direct main"
+  web_socket_counter:
+    dependency: transitive
     description:
-      path: api
-      relative: true
-    source: path
+      path: "examples/web_socket_counter"
+      ref: HEAD
+      resolved-ref: ff68b2e8f3a084b3badadb1cf195cff054cf5263
+      url: "https://github.com/VeryGoodOpenSource/dart_frog"
+    source: git
     version: "1.0.0+1"
   webkit_inspection_protocol:
     dependency: transitive
