@@ -1,11 +1,11 @@
 name: web_socket_counter_flutter
-description: A Very Good Project created by Very Good CLI.
+description: A Flutter real-time counter which integrates with Dart Frog and WebSockets.
 version: 1.0.0+1
 publish_to: none
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
-  flutter: 3.3.8
+  flutter: 3.3.10
 
 dependencies:
   bloc: ^8.1.0
