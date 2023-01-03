@@ -1,0 +1,28 @@
+name: counter_repository
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/counter_repository.yaml"
+      - "packages/counter_repository/lib/**"
+      - "packages/counter_repository/test/**"
+      - "packages/counter_repository/pubspec.yaml"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/counter_repository.yaml"
+      - "packages/counter_repository/lib/**"
+      - "packages/counter_repository/test/**"
+      - "packages/counter_repository/pubspec.yaml"
+
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
+    with:
+      working_directory: packages/counter_repository
+
+  pana:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/pana.yml@v1
+    with:
+      working_directory: packages/counter_repository
