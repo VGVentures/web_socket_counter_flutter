@@ -41,8 +41,8 @@ dart pub get
 dart_frog dev
 ```
 
-[ci_badge]: https://github.com/felangel/web_socket_counter/actions/workflows/main.yaml/badge.svg
-[ci_link]: https://github.com/felangel/web_socket_counter/actions/workflows/main.yaml
+[ci_badge]: https://github.com/VGVentures/web_socket_counter_flutter/actions/workflows/main.yaml/badge.svg
+[ci_link]: https://github.com/VGVentures/web_socket_counter_flutter/actions/workflows/main.yaml
 [coverage_badge]: coverage_badge.svg
 [dart_frog_link]: https://dartfrog.vgv.dev
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
