@@ -77,7 +77,7 @@ void main() {
     });
 
     group('close', () {
-      test('closes the underlying WebSocket',  () {
+      test('closes the underlying WebSocket', () {
         counterRepository.close();
         verify(socket.close).called(1);
       });
