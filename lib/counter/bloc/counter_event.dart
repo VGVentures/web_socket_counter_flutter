@@ -1,30 +1,29 @@
 part of 'counter_bloc.dart';
 
-abstract class CounterEvent extends Equatable {
-  @override
-  List<Object?> get props => [];
+abstract class CounterEvent {
+  const CounterEvent();
 }
 
-class CounterStarted extends CounterEvent {}
+class CounterStarted extends CounterEvent {
+  const CounterStarted();
+}
 
-class CounterIncrementPressed extends CounterEvent {}
+class CounterIncrementPressed extends CounterEvent {
+  const CounterIncrementPressed();
+}
 
-class CounterDecrementPressed extends CounterEvent {}
+class CounterDecrementPressed extends CounterEvent {
+  const CounterDecrementPressed();
+}
 
 class _CounterCountChanged extends CounterEvent {
-  _CounterCountChanged(this.count);
+  const _CounterCountChanged(this.count);
 
   final int count;
-
-  @override
-  List<Object?> get props => [count];
 }
 
 class _CounterConnectionStateChanged extends CounterEvent {
-  _CounterConnectionStateChanged(this.state);
+  const _CounterConnectionStateChanged(this.state);
 
   final ConnectionState state;
-
-  @override
-  List<Object?> get props => [state];
 }

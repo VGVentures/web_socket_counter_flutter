@@ -12,7 +12,7 @@ class CounterPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => CounterBloc(
         counterRepository: context.read<CounterRepository>(),
-      )..add(CounterStarted()),
+      )..add(const CounterStarted()),
       child: const CounterView(),
     );
   }
@@ -97,7 +97,9 @@ class IncrementButton extends StatelessWidget {
     return FloatingActionButton(
       backgroundColor: isConnected ? null : Colors.grey,
       onPressed: isConnected
-          ? () => context.read<CounterBloc>().add(CounterIncrementPressed())
+          ? () {
+              context.read<CounterBloc>().add(const CounterIncrementPressed());
+            }
           : null,
       child: const Icon(Icons.add),
     );
@@ -115,7 +117,9 @@ class DecrementButton extends StatelessWidget {
     return FloatingActionButton(
       backgroundColor: isConnected ? null : Colors.grey,
       onPressed: isConnected
-          ? () => context.read<CounterBloc>().add(CounterDecrementPressed())
+          ? () {
+              context.read<CounterBloc>().add(const CounterDecrementPressed());
+            }
           : null,
       child: const Icon(Icons.remove),
     );

@@ -5,7 +5,7 @@ import 'package:web_socket_counter_flutter/counter/counter.dart';
 void main() {
   group('App', () {
     testWidgets('renders CounterPage', (tester) async {
-      await tester.pumpWidget(const App());
+      await tester.runAsync(() => tester.pumpWidget(const App()));
       expect(find.byType(CounterPage), findsOneWidget);
     });
   });

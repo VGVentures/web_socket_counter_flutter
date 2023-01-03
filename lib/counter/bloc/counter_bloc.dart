@@ -66,7 +66,6 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
   Future<void> close() {
     _connectionSubscription?.cancel();
     _countSubscription?.cancel();
-    _counterRepository.close();
     return super.close();
   }
 }

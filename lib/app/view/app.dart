@@ -4,13 +4,32 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web_socket_counter_flutter/counter/counter.dart';
 import 'package:web_socket_counter_flutter/l10n/l10n.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
 
   @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  late final CounterRepository _counterRepository;
+
+  @override
+  void initState() {
+    super.initState();
+    _counterRepository = CounterRepository();
+  }
+
+  @override
+  void dispose() {
+    _counterRepository.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (_) => CounterRepository(),
+    return RepositoryProvider.value(
+      value: _counterRepository,
       child: const AppView(),
     );
   }
