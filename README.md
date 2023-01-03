@@ -1,5 +1,6 @@
 # WebSocket Counter Flutter
 
+[![build][ci_badge]][ci_link]
 ![coverage][coverage_badge]
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 [![License: MIT][license_badge]][license_link]
@@ -139,6 +140,8 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
 }
 ```
 
+[ci_badge]: https://github.com/felangel/web_socket_counter/actions/workflows/main.yaml/badge.svg
+[ci_link]: https://github.com/felangel/web_socket_counter/actions/workflows/main.yaml
 [coverage_badge]: coverage_badge.svg
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
 [internationalization_link]: https://flutter.dev/docs/development/accessibility-and-localization/internationalization
