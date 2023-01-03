@@ -14,7 +14,7 @@ class CounterRepository {
   /// Send an increment message to the server.
   void increment() => _ws.send(Message.increment.value);
 
-  /// Send an decrement message to the server.
+  /// Send a decrement message to the server.
   void decrement() => _ws.send(Message.decrement.value);
 
   /// Return a stream of real-time count updates from the server.
