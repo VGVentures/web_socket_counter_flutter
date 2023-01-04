@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:web_socket_counter_flutter/counter/counter.dart';
+import 'package:web_socket_counter_flutter/l10n/l10n.dart';
 
 import '../../helpers/helpers.dart';
 
@@ -39,6 +40,7 @@ void main() {
     });
 
     testWidgets('renders current count (disconnected)', (tester) async {
+      final l10n = await AppLocalizations.delegate.load(const Locale('en'));
       const state = CounterState(count: 42);
       when(() => counterBloc.state).thenReturn(state);
       await tester.pumpApp(
@@ -48,10 +50,11 @@ void main() {
         ),
       );
       expect(find.text('${state.count}'), findsOneWidget);
-      expect(find.text('Disconnected'), findsOneWidget);
+      expect(find.text(l10n.counterDisconnectedText), findsOneWidget);
     });
 
     testWidgets('renders current count (connected)', (tester) async {
+      final l10n = await AppLocalizations.delegate.load(const Locale('en'));
       const state = CounterState(count: 42, status: CounterStatus.connected);
       when(() => counterBloc.state).thenReturn(state);
       await tester.pumpApp(
@@ -61,7 +64,7 @@ void main() {
         ),
       );
       expect(find.text('${state.count}'), findsOneWidget);
-      expect(find.text('Connected'), findsOneWidget);
+      expect(find.text(l10n.counterConnectedText), findsOneWidget);
     });
 
     testWidgets(
