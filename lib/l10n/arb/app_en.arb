@@ -3,5 +3,13 @@
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
         "description": "Text shown in the AppBar of the Counter Page"
+    },
+    "counterConnectedText": "Connected",
+    "@counterConnectedText": {
+        "description": "Text shown on the Counter Page to indicate the app is connected to the backend."
+    },
+    "counterDisconnectedText": "Disconnected",
+    "@counterDisconnectedText": {
+        "description": "Text shown on the Counter Page to indicate the app is disconnected from the backend."
     }
 }

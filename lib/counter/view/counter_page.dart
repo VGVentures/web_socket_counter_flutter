@@ -65,11 +65,12 @@ class ConnectionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final connection = context.select((CounterBloc bloc) => bloc.state.status);
     switch (connection) {
       case CounterStatus.connected:
         return Text(
-          'Connected',
+          l10n.counterConnectedText,
           style: theme.textTheme.caption?.copyWith(
             color: theme.colorScheme.primary,
           ),
@@ -77,7 +78,7 @@ class ConnectionText extends StatelessWidget {
 
       case CounterStatus.disconnected:
         return Text(
-          'Disconnected',
+          l10n.counterDisconnectedText,
           style: theme.textTheme.caption?.copyWith(
             color: theme.colorScheme.error,
           ),
