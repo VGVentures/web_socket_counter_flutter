@@ -12,26 +12,28 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
       : _counterRepository = counterRepository,
         super(const CounterState()) {
     on<CounterStarted>(_onCounterStarted);
-    on<_CounterConnectionStateChanged>(_onCounterConnectionStateChanged);
-    on<_CounterCountChanged>(_onCounterCountChanged);
     on<CounterIncrementPressed>(_onCounterIncrementPressed);
     on<CounterDecrementPressed>(_onCounterDecrementPressed);
   }
 
   final CounterRepository _counterRepository;
-  StreamSubscription<int>? _countSubscription;
-  StreamSubscription<ConnectionState>? _connectionSubscription;
 
-  void _onCounterStarted(
+  Future<void> _onCounterStarted(
     CounterStarted event,
     Emitter<CounterState> emit,
-  ) {
-    _countSubscription = _counterRepository.count.listen(
-      (count) => add(_CounterCountChanged(count)),
+  ) async {
+    final countEmitter = emit.forEach<int>(
+      _counterRepository.count,
+      onData: (count) =>
+          state.copyWith(count: count, status: CounterStatus.connected),
     );
-    _connectionSubscription = _counterRepository.connection.listen((state) {
-      add(_CounterConnectionStateChanged(state));
-    });
+
+    final connectionEmitter = emit.forEach<ConnectionState>(
+      _counterRepository.connection,
+      onData: (state) => this.state.copyWith(status: state.toStatus()),
+    );
+
+    await Future.wait([countEmitter, connectionEmitter]);
   }
 
   void _onCounterIncrementPressed(
@@ -46,27 +48,6 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
     Emitter<CounterState> emit,
   ) {
     _counterRepository.decrement();
-  }
-
-  void _onCounterConnectionStateChanged(
-    _CounterConnectionStateChanged event,
-    Emitter<CounterState> emit,
-  ) {
-    emit(state.copyWith(status: event.state.toStatus()));
-  }
-
-  void _onCounterCountChanged(
-    _CounterCountChanged event,
-    Emitter<CounterState> emit,
-  ) {
-    emit(state.copyWith(count: event.count, status: CounterStatus.connected));
-  }
-
-  @override
-  Future<void> close() {
-    _connectionSubscription?.cancel();
-    _countSubscription?.cancel();
-    return super.close();
   }
 }
 
