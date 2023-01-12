@@ -15,15 +15,3 @@ class CounterIncrementPressed extends CounterEvent {
 class CounterDecrementPressed extends CounterEvent {
   const CounterDecrementPressed();
 }
-
-class _CounterCountChanged extends CounterEvent {
-  const _CounterCountChanged(this.count);
-
-  final int count;
-}
-
-class _CounterConnectionStateChanged extends CounterEvent {
-  const _CounterConnectionStateChanged(this.state);
-
-  final ConnectionState state;
-}
